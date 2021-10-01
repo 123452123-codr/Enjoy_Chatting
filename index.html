@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A legendary chatting web application to chat with anyone, anywhere in the world with world class security">
+        <link rel="icon" href="Enjoy Chatting!.png">
+        <title>Enjoy Chatting!</title>
+    </head>
+    <body>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+            body{
+	            font-size: 20px;
+	            font-family: 'Work Sans', sans-serif;
+	            color: #333;
+                font-weight: 300;
+                text-align: center;
+                background-color: #f8f6f0;
+            }
+            p{
+                font-size: 20px;
+            }
+            h1{
+                font-weight: 300;
+                margin: 0px;
+                padding: 10px;
+                font-size: 20px;
+                background-color: #444;
+                color: #fff;
+            }
+        </style>
+        <h1>Enjoy Chatting!</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <img src="Enjoy Chatting!.png" alt="Icon">
+        <br>
+        <p align="center">Enjoy Chatting!</p>
+        <script>
+            let signUpDone = localStorage.getItem("SignUpDone");
+            let signInDone = localStorage.getItem("signInDone");
+            if(signUpDone === "1" && signInDone === "1")
+            {
+                setTimeout(function(){
+                    window.location.replace("mainpage.html","_self");
+                }, 1000);
+            }
+            else if(signUpDone === "1" && signInDone != "1")
+            {
+                setTimeout(function(){
+                    window.location.replace("signIn.html","_self");
+                }, 1000);
+            }
+            else if(signUpDone != "1" && signInDone != "1")
+            {
+                setTimeout(function(){
+                    window.location.replace("signUp.html","_self");
+                }, 1000);
+            }
+        </script>
+    </body>
+</html>

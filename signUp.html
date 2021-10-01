@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A legendary chatting web application to chat with anyone, anywhere in the world with world class security">
+        <title>Enjoy Chatting!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="icon" href="Enjoy Chatting!.png">
+    </head>
+    <body>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+            body{
+	            font-size: 20px;
+	            font-family: 'Work Sans', sans-serif;
+	            color: #333;
+                font-weight: 300;
+                text-align: center;
+                background-color: #f8f6f0;
+            }
+            p{
+                font-size: 20px;
+            }
+            h1{
+                font-weight: 300;
+                margin: 0px;
+                padding: 10px;
+                font-size: 20px;
+                background-color: #444;
+                color: #fff;
+            }
+            button{
+                font-family: 'Work Sans', sans-serif;
+	            font-size: 20px;
+	            background-color: #279;
+	            color: #fff;
+	            border: 0px;
+	            border-radius: 10px;
+	            padding: 15px;
+	            cursor: pointer;
+	            margin-bottom: 20px;
+            }
+            button:hover{
+	            background-color: #38a;
+            }
+            .spinner-border {
+                display: none;
+            }
+        </style>
+        <h1 id="b"></h1>
+        <div class="container">
+            <center>
+                <div>
+                    <p id="a">Let's Sign Up!</p>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <input type="email" class="form-control input-lg" name="emailid" id="email" placeholder="Email id">
+                <br>
+                <br>
+                <br>
+                <input type="password" class="form-control input-lg" name="passwordid" id="password" placeholder="Password">
+                <br>
+                <br>
+                <br>
+                <br>
+                <button class="btn btn-primary btn-lg" id="signUp">Sign Up</button>
+                <div class="spinner-border" id="spin"></div>
+                <br>
+                <br>
+                <br>
+                <button class="btn btn-primary btn-lg" id="alreadyauser">Already a user? Sign In</button>
+            </center>
+        </div>
+    </body>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+        import {getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1MdhLU-_u3rDoiTSO2N7_8acBGWk0aJQ",
+            authDomain: "enjoychattingpro.firebaseapp.com",
+            databaseURL: "https://enjoychattingpro-default-rtdb.firebaseio.com",
+            projectId: "enjoychattingpro",
+            storageBucket: "enjoychattingpro.appspot.com",
+            messagingSenderId: "910234385760",
+            appId: "1:910234385760:web:c4704dad72924852403205",
+            measurementId: "G-LYD72BMKRP"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        var email = document.getElementById('email');
+        var password = document.getElementById('password');
+        var signUp = document.getElementById('signUp');
+        var alreadyauser = document.getElementById('alreadyauser');
+        var i = 0;
+        var txt = "Welcome to Enjoy Chatting!";
+        var speed = 50;
+
+        window.onload = function typeWriter(){
+            if(i < txt.length)
+            {
+                document.getElementById("b").innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        };
+
+        signUp.addEventListener("click", function(){
+            const auth = getAuth();
+            createUserWithEmailAndPassword(auth, email.value, password.value)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                localStorage.setItem("signUpDone", "1");
+                document.getElementById('spin').style.display = 'block';
+                setTimeout(function(){
+                    window.location.replace("signIn.html","_self");
+                }, 1000);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                if(errorCode === 'auth/invalid-email')
+                {
+                    alert("The email is either invalid or the Email field is empty.");
+                }
+                else if(errorCode === 'auth/internal-error')
+                {
+                    alert("An internal error occured. Kindly check if both the fields have been filled. Thank you.");
+                }
+                else
+                {
+                    alert(errorMessage);
+                }
+                console.log(errorCode);
+            });
+        });
+
+        alreadyauser.addEventListener("click", function(){
+            window.location.replace("signIn.html","_self");
+        });
+
+        password.addEventListener("keydown", function(event){
+            var key = event.which || event.key;
+            if(key === 13)
+            {
+                event.preventDefault();
+
+                const auth = getAuth();
+                createUserWithEmailAndPassword(auth, email.value, password.value)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const text = JSON.stringify(user);
+                    localStorage.setItem("UserDetails", text);
+                    localStorage.setItem("signUpDone", "1");
+                    document.getElementById('spin').style.display = 'block';
+                    setTimeout(function(){
+                        window.location.replace("signIn.html","_self");
+                    }, 1000);
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    if(errorCode === 'auth/invalid-email')
+                    {
+                        alert("The email is either invalid or the Email field is empty.");
+                    }
+                    else if(errorCode === 'auth/internal-error')
+                    {
+                        alert("An internal error occured. Kindly check if both the fields have been filled. Thank you.");
+                    }
+                    else
+                    {
+                        alert(errorMessage);
+                    }
+                    console.log(errorCode);
+                });
+            }
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>
