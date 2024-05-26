@@ -1,0 +1,7 @@
+database.ref('messages').orderByChild('timestamp').on('child_added', (snapshot) => {
+
+database.ref('messages').push({
+                username: currentUser.email,
+                text: messageText,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
